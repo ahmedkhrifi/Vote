@@ -6,14 +6,23 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { SubjectComponent } from './subject/subject.component';
 import { ProfilComponent } from './profil/profil.component';
+import { AdminComponent } from './admin/admin.component';
+import { AuthGuard } from './auth.guard';
+import { RoleGuard } from './role.guard';
+
+
+
 
 
 const routes: Routes = [
-  { path: 'subject/:id', component: SubjectComponent },
-  { path: 'profil', component: ProfilComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'subject/:id', component: SubjectComponent, canActivate: [AuthGuard]  },
+  { path: 'profil', component: ProfilComponent , canActivate: [AuthGuard]  },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [RoleGuard, AuthGuard] },
+
   { path: '**', redirectTo: 'home' }
 
 ];
